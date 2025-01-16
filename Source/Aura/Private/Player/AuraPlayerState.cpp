@@ -14,3 +14,8 @@ AAuraPlayerState::AAuraPlayerState()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 }
+
+UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
