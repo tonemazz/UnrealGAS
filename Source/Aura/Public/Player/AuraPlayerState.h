@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
-#include "AuraPlayerState.generated.h"
 #include "AbilitySystemInterface.h"
+#include "AuraPlayerState.generated.h"
+
 
 /**
  * 
