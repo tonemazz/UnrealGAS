@@ -44,7 +44,7 @@ void AAuraPlayerController::SetupInputComponent()
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
 
-}
+} // end of SetupInputComponent()
 
 void AAuraPlayerController::CursorTrace()
 {
@@ -109,12 +109,7 @@ void AAuraPlayerController::CursorTrace()
 		}
 	}
 
-	if (CurrentActor && CurrentActor->bHighlighted)
-	{
-		DrawDebugSphere(GetWorld(), CursorHit.GetActor()->GetActorLocation(), 50, 32, FColor::Green, false, -1.f);
-	}
-
-}
+} // end of CursorTrace()
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
@@ -129,4 +124,4 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y); // InputAxisVector should return 1 when pressing W or forward stick, and -1 when pressing S or backward 
 		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
 	}
-}
+} // end of Move()
