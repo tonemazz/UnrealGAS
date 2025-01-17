@@ -6,6 +6,8 @@
 #include "AuraCharacterBase.h"
 #include "AuraCharacter.generated.h"
 
+class AAuraPlayerState;
+
 /**
  * 
  */
@@ -16,5 +18,5 @@ class AURA_API AAuraCharacter : public AAuraCharacterBase
 
 public:
 	AAuraCharacter();
-
+	TObjectPtr<AAuraPlayerState> PlayerState;
 };
