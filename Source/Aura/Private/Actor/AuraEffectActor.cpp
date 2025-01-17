@@ -16,6 +16,9 @@ AAuraEffectActor::AAuraEffectActor()
 	Sphere->SetupAttachment(GetRootComponent());
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(Sphere);
+
+	// Setup for highlighting functionality
+	Mesh->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 	Mesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 }
 
@@ -63,10 +66,12 @@ void AAuraEffectActor::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AA
 void AAuraEffectActor::HighlightActor()
 {
 	Mesh->SetRenderCustomDepth(true);
+	UE_LOG(LogTemp, Warning, TEXT("Highlighting actor"));
 }
 
 void AAuraEffectActor::UnHighlightActor()
 {
 	Mesh->SetRenderCustomDepth(false);
+	UE_LOG(LogTemp, Warning, TEXT("Un-Highlighting actor"));
 }
 
