@@ -5,7 +5,7 @@
 #include "Aura/Aura.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
-#include "Player/AuraPlayerState.h"
+
 
 // Default Constructor
 AAuraEnemy::AAuraEnemy()

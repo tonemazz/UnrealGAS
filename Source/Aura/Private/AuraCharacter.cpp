@@ -23,10 +23,27 @@ AAuraCharacter::AAuraCharacter()
 void AAuraCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
-	// Setup Actor Ability Info
-	AttributeSet = PlayerState->GetAttributeSet();
+void AAuraCharacter::PossessedBy(AController* NewController)
+{
+	// Init ability actor info for the server
+	Super::PossessedBy(NewController);
+	SetupAbilityActorInfo();
+}
+
+void AAuraCharacter::OnRep_PlayerState()
+{
+	// Init ability actor info for the client
+	Super::OnRep_PlayerState();
+	SetupAbilityActorInfo();
+}
+
+void AAuraCharacter::SetupAbilityActorInfo()
+{
+	TObjectPtr<AAuraPlayerState> PlayerState = GetPlayerState<AAuraPlayerState>();
+	check(PlayerState);
+	PlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(PlayerState, this);
 	AbilitySystemComponent = PlayerState->GetAbilitySystemComponent();
-	AbilitySystemComponent->InitAbilityActorInfo(PlayerState, this);
-
+	AttributeSet = PlayerState->GetAttributeSet();
 }
