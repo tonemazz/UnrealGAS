@@ -2,7 +2,7 @@
 
 
 #include "UI/Widget/AuraUserWidget.h"
-#include UAbilitySystemComponent.h
+
 
 void UAuraUserWidget::SetWidgetController(UObject* InWidgetController)
 {
