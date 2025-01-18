@@ -8,9 +8,9 @@
 UAuraAttributeSet::UAuraAttributeSet()
 {
 	// Using initters as it's too early to call set functions in the constructor
-	InitHealth(100.0f);
+	InitHealth(50.0f);
 	InitMaxHealth(100.0f);
-	InitMana(100.0f);
+	InitMana(50.0f);
 	InitMaxMana(100.0f);
 }
 

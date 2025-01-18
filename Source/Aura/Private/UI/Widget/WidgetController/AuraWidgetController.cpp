@@ -5,6 +5,14 @@
 #include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
 
+void UAuraWidgetController::BindCallbacksToDependencies()
+{
+}
+
+void UAuraWidgetController::BroadcastInitialValues()
+{
+}
+
 void UAuraWidgetController::SetWidgetControllerParams(const FWidgetControllerParams& InParams)
 {
 	PlayerController = InParams.PlayerController;

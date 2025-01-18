@@ -1,7 +1,7 @@
 // Copyright Tone 2025
 
 /// <CLASS SUMMARY>
-/// - AAuraHUD : public AHUD
+/// - AAuraHUD : public AHud
 /// 
 /// - Responsibilities
 ///		- Manages the HUD for player characters
@@ -12,9 +12,7 @@
 #include "UI/AuraHUD.h"
 #include "UI/Widget/AuraUserWidget.h"
 #include "UI/Widget/WidgetController/OverlayWidgetController.h"
-#include "AbilitySystem/AuraAbilitySystemComponent.h"
-#include "AbilitySystem/AuraAttributeSet.h"
-#include "Player/AuraPlayerState.h"
+
 
 
 /// <function summary>
@@ -42,11 +40,11 @@ void AAuraHUD::InitializeOverlay(APlayerController* PC, APlayerState* PS, UAbili
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
 	OverlayWidget = Cast<UAuraUserWidget>(Widget);
 
-	FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
+	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
 	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
 
 	OverlayWidget->SetWidgetController(WidgetController);
-
+	WidgetController->BroadcastInitialValues();
 	Widget->AddToViewport();
 }
 
@@ -59,6 +57,7 @@ UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetCont
 	{
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(InParams);
+		OverlayWidgetController->BindCallbacksToDependencies();
 
 		return OverlayWidgetController;
 	}
