@@ -1,5 +1,13 @@
 // Copyright Tone 2025
 
+/// <CLASS SUMMARY>
+/// - AAuraHUD : public AHUD
+/// 
+/// - Responsibilities
+///		- Manages the HUD for player characters
+///		- Creation and initialization of overlay widgets and 
+///			the controller that manages them.
+/// </CLASS SUMMARY>
 
 #include "UI/AuraHUD.h"
 #include "UI/Widget/AuraUserWidget.h"
@@ -9,10 +17,9 @@
 #include "Player/AuraPlayerState.h"
 
 
-
-/// <summary>
-/// BeginPlay function
-/// </summary>
+/// <function summary>
+///	It's the first function called when the game starts.
+/// </function summary>
 void AAuraHUD::BeginPlay()
 {
 	Super::BeginPlay();
@@ -21,10 +28,12 @@ void AAuraHUD::BeginPlay()
 	Widget->AddToViewport();
 }
 
-/// <summary>
+/// <function summary>
 /// Initialize the overlay widget and link it to a WidgetController. 
 /// Will crash if OverlayWidgetClass or OverlayWidgetControllerClass is not set in the editor.
-/// </summary>
+/// WARNING: This function should be after all its parameters are initialized.
+/// This is currently done from the AuraCharacter class.
+/// </function summary>
 void AAuraHUD::InitializeOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	checkf(OverlayWidgetClass, TEXT("OverlayWidgetClass is not initialized. Please fill out BP_AuraHUD"));
@@ -37,12 +46,13 @@ void AAuraHUD::InitializeOverlay(APlayerController* PC, APlayerState* PS, UAbili
 	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
 
 	OverlayWidget->SetWidgetController(WidgetController);
+
+	Widget->AddToViewport();
 }
 
-/// <summary>
-/// Create OverlayWidgetController if it doesn't exist, or return the existing one.
-/// Necessary due to the fact that we can't create UObject-derived objects in constructor.
-/// </summary>
+/// <function summary>
+/// Returns the OverlayWidgetController. If it doesn't exist, it creates a new one.
+/// </function summary>
 UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetControllerParams& InParams)
 {
 	if (OverlayWidgetController == nullptr)

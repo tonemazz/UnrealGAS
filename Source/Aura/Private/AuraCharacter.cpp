@@ -22,11 +22,15 @@ AAuraCharacter::AAuraCharacter()
 	
 }
 
+/// <summary>
+/// </summary>
 void AAuraCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
+/// <summary>
+/// </summary>
 void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	// Init ability actor info for the server
@@ -34,6 +38,8 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	SetupAbilityActorInfo();
 }
 
+/// <summary>
+/// </summary>
 void AAuraCharacter::OnRep_PlayerState()
 {
 	// Init ability actor info for the client
@@ -41,6 +47,10 @@ void AAuraCharacter::OnRep_PlayerState()
 	SetupAbilityActorInfo();
 }
 
+/// <summary>
+/// Initialize the ability actor info for the player state
+/// Also centralizes initialization of AuraHUD parts
+/// </summary>
 void AAuraCharacter::SetupAbilityActorInfo()
 {
 	TObjectPtr<AAuraPlayerState> AuraPlayerState = GetPlayerState<AAuraPlayerState>();

@@ -1,5 +1,14 @@
 // Copyright Tone 2025
 
+/// <CLASS SUMMARY>
+/// - AAuraHUD : public AHUD
+/// 
+/// - Responsibilities
+///		- Manages the HUD for player characters
+///		- Creation and initialization of overlay widgets and 
+///			the controller that manages them.
+/// </CLASS SUMMARY>
+
 #pragma once
 
 #include "CoreMinimal.h"
