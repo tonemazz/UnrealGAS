@@ -13,7 +13,7 @@
 
 
 UCLASS()
-class AURA_API AAuraEffectActor : public AActor, public IEnemyInterface
+class AURA_API AAuraEffectActor : public AActor
 {
 	GENERATED_BODY()
 	
@@ -27,15 +27,11 @@ public:
 	// Callback to OnComponentEndOverlap
 	UFUNCTION() virtual void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-	virtual void HighlightActor() override;
-	virtual void UnHighlightActor() override;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere) TObjectPtr<USphereComponent> Sphere;
-	UPROPERTY(EditAnywhere) TObjectPtr<UStaticMeshComponent> Mesh;
 
 	UPROPERTY(EditAnywhere) float HealthAddAmount = 50.f;
 	UPROPERTY(EditAnywhere) float ManaAddAmount = -25.f;

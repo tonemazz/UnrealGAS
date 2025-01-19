@@ -12,14 +12,7 @@
 AAuraEffectActor::AAuraEffectActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
-	Sphere->SetupAttachment(GetRootComponent());
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(Sphere);
 
-	// Setup for highlighting functionality
-	Mesh->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
-	Mesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 }
 
 void AAuraEffectActor::Tick(float DeltaTime)
@@ -30,18 +23,15 @@ void AAuraEffectActor::Tick(float DeltaTime)
 void AAuraEffectActor::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// Bind callbacks to delegates
-	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AAuraEffectActor::OnOverlap);
-	Sphere->OnComponentEndOverlap.AddDynamic(this, &AAuraEffectActor::OnEndOverlap);
+	
 }
 
 void AAuraEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	// Cast to check if OtherActor implements IAbilitySystemInterface
-	IAbilitySystemInterface* OtherActorASCInterface = Cast<IAbilitySystemInterface>(OtherActor);
 
-	if (OtherActorASCInterface)
+
+	// Cast to check if OtherActor implements IAbilitySystemInterface
+	if (IAbilitySystemInterface* OtherActorASCInterface = Cast<IAbilitySystemInterface>(OtherActor))
 	{
 		// Currently forsaking encapsulation and using const_cast for testing purposes;
 		// TODO: Implement attribute modification through Gameplay Effects (the GAS intended way)
@@ -66,15 +56,5 @@ void AAuraEffectActor::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 }
 
-void AAuraEffectActor::HighlightActor()
-{
-	Mesh->SetRenderCustomDepth(true);
-	UE_LOG(LogTemp, Warning, TEXT("Highlighting actor"));
-}
 
-void AAuraEffectActor::UnHighlightActor()
-{
-	Mesh->SetRenderCustomDepth(false);
-	UE_LOG(LogTemp, Warning, TEXT("Un-Highlighting actor"));
-}
 
