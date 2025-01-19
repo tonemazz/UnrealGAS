@@ -48,8 +48,11 @@ void AAuraEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 		const UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(OtherActorASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UAuraAttributeSet::StaticClass()));
 		UAuraAttributeSet* MutableAttributeSet = const_cast<UAuraAttributeSet*>(AuraAttributeSet);
 
-		// While this will work, it bypasses the GAS's network replication
+		// Setting attributes this way works totally fine for one client, but it bypasses the GAS's network replication,
+		// meaning value changes will not replicate to other clients. For built-in replication we need to change
+		// the system to use GameplayEffects.
 		MutableAttributeSet->SetHealth(AuraAttributeSet->GetHealth() + HealthAddAmount);
+		MutableAttributeSet->SetMana(AuraAttributeSet->GetMana() + ManaAddAmount);
 	}
 
 	if (bConsumable)

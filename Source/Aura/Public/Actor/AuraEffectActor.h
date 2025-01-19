@@ -38,5 +38,6 @@ private:
 	UPROPERTY(EditAnywhere) TObjectPtr<UStaticMeshComponent> Mesh;
 
 	UPROPERTY(EditAnywhere) float HealthAddAmount = 50.f;
+	UPROPERTY(EditAnywhere) float ManaAddAmount = -25.f;
 	UPROPERTY(EditAnywhere) bool bConsumable = false;
 };
