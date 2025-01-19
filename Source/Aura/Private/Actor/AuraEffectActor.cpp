@@ -6,15 +6,19 @@
 #include "AbilitySystemInterface.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
-#include "Aura/Aura.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "GameplayEffect.h"
 
-
+// Default constructor
 AAuraEffectActor::AAuraEffectActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	SetRootComponent(CreateDefaultSubobject<USceneComponent>("SceneRoot"));
+
 }
 
+// Tick function
 void AAuraEffectActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -26,24 +30,22 @@ void AAuraEffectActor::BeginPlay()
 	
 }
 
+void AAuraEffectActor::ApplyEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GameplayEffectClass)
+{
+	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Target);
+	if (TargetASC == nullptr) return; 
+
+	check (GameplayEffectClass); // If GameplayEffectClass is not set, crash
+	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(this);
+	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, 1.f, EffectContextHandle);
+	TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
+}
+
+// On overlap implementation
 void AAuraEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-
-
-	// Cast to check if OtherActor implements IAbilitySystemInterface
-	if (IAbilitySystemInterface* OtherActorASCInterface = Cast<IAbilitySystemInterface>(OtherActor))
-	{
-		// Currently forsaking encapsulation and using const_cast for testing purposes;
-		// TODO: Implement attribute modification through Gameplay Effects (the GAS intended way)
-		const UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(OtherActorASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UAuraAttributeSet::StaticClass()));
-		UAuraAttributeSet* MutableAttributeSet = const_cast<UAuraAttributeSet*>(AuraAttributeSet);
-
-		// Setting attributes this way works totally fine for one client, but it bypasses the GAS's network replication,
-		// meaning value changes will not replicate to other clients. For built-in replication we need to change
-		// the system to use GameplayEffects.
-		MutableAttributeSet->SetHealth(AuraAttributeSet->GetHealth() + HealthAddAmount);
-		MutableAttributeSet->SetMana(AuraAttributeSet->GetMana() + ManaAddAmount);
-	}
+	ApplyEffectToTarget(OtherActor, InstantGameplayEffectClass);
 
 	if (bConsumable)
 	{
