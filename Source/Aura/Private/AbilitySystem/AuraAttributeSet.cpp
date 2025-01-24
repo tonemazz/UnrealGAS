@@ -26,7 +26,7 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 
 	if (Attribute == GetMaxHealthAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());git 
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
 		UE_LOG(LogTemp, Warning, TEXT("MaxHealth: %f"), NewValue);
 	}
 
