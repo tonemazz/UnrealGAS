@@ -5,9 +5,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ActiveGameplayEffectHandle.h"
 #include "GameFramework/Actor.h"
 #include "AuraEffectActor.generated.h"
 
+class UAbilitySystemComponent;
 class UGameplayEffect;
 UENUM(BlueprintType) enum EEffectApplicationPolicy
 {
@@ -56,8 +58,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TSubclassOf<UGameplayEffect> InfiniteGameplayEffectClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TEnumAsByte<EEffectApplicationPolicy> InfiniteEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TEnumAsByte<EEffectRemovalPolicy> InfiniteEffectRemovalPolicy;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bDestroyOnEffectRemoval = false;
+	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 private:
 
 	UPROPERTY(EditAnywhere) float HealthAddAmount = 50.f;
