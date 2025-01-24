@@ -47,9 +47,9 @@ protected:
 		UFUNCTION(BlueprintCallable) void OnOverlap(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 		UFUNCTION(BlueprintCallable) void OnEndOverlap(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 	
-	UFUNCTION(BlueprintCallable) void ApplyEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GameplayEffectClass);
+	UFUNCTION(BlueprintCallable) void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects") TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;\
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;\
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TEnumAsByte<EEffectApplicationPolicy> InstantEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TSubclassOf<UGameplayEffect> DurationGameplayEffectClass;
@@ -59,7 +59,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TEnumAsByte<EEffectApplicationPolicy> InfiniteEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TEnumAsByte<EEffectRemovalPolicy> InfiniteEffectRemovalPolicy;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bDestroyOnEffectRemoval = false;
-	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 private:
 
 	UPROPERTY(EditAnywhere) float HealthAddAmount = 50.f;
