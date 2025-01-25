@@ -46,6 +46,7 @@ protected:
 
 		UFUNCTION(BlueprintCallable) void OnOverlap(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 		UFUNCTION(BlueprintCallable) void OnEndOverlap(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
+
 	
 	UFUNCTION(BlueprintCallable) void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 	
@@ -59,6 +60,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TEnumAsByte<EEffectApplicationPolicy> InfiniteEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects") TEnumAsByte<EEffectRemovalPolicy> InfiniteEffectRemovalPolicy;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bDestroyOnEffectRemoval = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects") float ActorLevel = 1.f;
 private:
 
 	UPROPERTY(EditAnywhere) float HealthAddAmount = 50.f;
