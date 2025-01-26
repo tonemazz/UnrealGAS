@@ -25,6 +25,6 @@ public:
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
-	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-	TObjectPtr<UAttributeSet> AttributeSet;
+	UPROPERTY(EditAnywhere) TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+	UPROPERTY(EditAnywhere) TObjectPtr<UAttributeSet> AttributeSet;
 };
