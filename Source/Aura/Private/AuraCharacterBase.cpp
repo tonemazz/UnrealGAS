@@ -37,6 +37,11 @@ void AAuraCharacterBase::InitializePrimaryAttributes()
 	ApplyEffectToTarget(AbilitySystemComponent, DefaultPrimaryAttributes);
 }
 
+void AAuraCharacterBase::InitializeSecondaryAttributes()
+{
+	ApplyEffectToTarget(AbilitySystemComponent, DefaultSecondaryAttributes);
+}
+
 void AAuraCharacterBase::ApplyEffectToTarget(UAbilitySystemComponent* ASC, const TSubclassOf<UGameplayEffect>& EffectClass) const
 {
 	if (EffectClass != nullptr && ASC)
