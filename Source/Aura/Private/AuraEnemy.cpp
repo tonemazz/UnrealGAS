@@ -28,6 +28,11 @@ void AAuraEnemy::BeginPlay()
 	Super::BeginPlay();
 }
 
+int32 AAuraEnemy::GetPlayerLevel()
+{
+	return Level;
+}
+
 
 void AAuraEnemy::HighlightActor()
 {

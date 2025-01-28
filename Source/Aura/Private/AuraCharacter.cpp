@@ -47,6 +47,13 @@ void AAuraCharacter::OnRep_PlayerState()
 	SetupAbilityActorInfo();
 }
 
+int32 AAuraCharacter::GetPlayerLevel()
+{
+	TObjectPtr<AAuraPlayerState> AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+	return AuraPlayerState->GetLevel();
+}
+
 /// <summary>
 /// Initialize the ability actor info for the player state
 /// Also centralizes initialization of AuraHUD parts

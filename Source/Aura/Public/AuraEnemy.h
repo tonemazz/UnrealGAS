@@ -20,6 +20,7 @@ public:
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 	virtual void BeginPlay() override;
+	virtual int32 GetPlayerLevel() override;
 
 protected:
 	virtual void SetupAbilityActorInfo() override;

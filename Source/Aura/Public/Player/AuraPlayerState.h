@@ -24,6 +24,7 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	int32 GetLevel() const;
 
 protected:
 	UPROPERTY(EditAnywhere) TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
