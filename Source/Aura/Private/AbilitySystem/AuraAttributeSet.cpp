@@ -8,10 +8,21 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GameFramework/Character.h"
 #include "GameplayEffectExtension.h"
+#include "AuraGameplayTags.h"
 
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
+	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+	
+	FAttributeSignature StrengthDelegate;
+	StrengthDelegate.BindStatic(UAuraAttributeSet::GetStrengthAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, StrengthDelegate);
+
+	FAttributeSignature IntelligenceDelegate;
+	IntelligenceDelegate.BindStatic(UAuraAttributeSet::GetIntelligenceAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, IntelligenceDelegate);
+
 	
 }
 
