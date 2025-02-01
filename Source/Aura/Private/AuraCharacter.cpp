@@ -78,5 +78,6 @@ void AAuraCharacter::SetupAbilityActorInfo()
 
 	InitializePrimaryAttributes();
 	InitializeSecondaryAttributes();
+	InitializeVitalAttributes();
 
 }
