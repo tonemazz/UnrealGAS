@@ -15,8 +15,6 @@ GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
-DECLARE_DELEGATE_RetVal(FGameplayAttribute, FAttributeSignature);
-
 USTRUCT()
 struct FEffectProperties
 {
@@ -45,7 +43,8 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 
-	TMap<FGameplayTag, FAttributeSignature> TagsToAttributes;
+	// Maps an FGameplayTag to a function pointer
+	TMap<FGameplayTag, FGameplayAttribute(*)()> TagsToAttributes;
 	
 	// Primary Attributes
 	UPROPERTY(BluePrintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Attributes") FGameplayAttributeData Strength; // Attribute declaration 
