@@ -32,6 +32,10 @@ struct FEffectProperties
 	UPROPERTY() ACharacter* TargetCharacter = nullptr;
 };
 
+// Template alias for a function pointer
+template<class T>
+using TStaticFuncPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
+
 UCLASS()
 class AURA_API UAuraAttributeSet : public UAttributeSet
 {
@@ -43,8 +47,8 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 
-	// Maps an FGameplayTag to a function pointer
-	TMap<FGameplayTag, FGameplayAttribute(*)()> TagsToAttributes;
+	// Maps an FGameplayTag to an FGameplayAttribute function pointer
+	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
 	
 	// Primary Attributes
 	UPROPERTY(BluePrintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Attributes") FGameplayAttributeData Strength; // Attribute declaration 
