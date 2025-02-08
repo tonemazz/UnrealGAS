@@ -19,9 +19,13 @@ public:
 	AAuraEnemy();
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
+	virtual void BeginPlay() override;
+	virtual int32 GetPlayerLevel() override;
 
 protected:
+	virtual void SetupAbilityActorInfo() override;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults") int32 Level = 1;
 
+	
 private:
-	TObjectPtr<USkeletalMeshComponent> Body;
 };
