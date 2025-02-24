@@ -175,9 +175,11 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
 					DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
 				}
+				bAutoRunning = true;
 			}
-			
 		}
+		FollowTime = 0.f;
+		bTargeting = false;
 	}
 }
 
