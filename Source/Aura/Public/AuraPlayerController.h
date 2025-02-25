@@ -28,6 +28,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 	void CursorTrace();
+	FHitResult CursorHit;
 
 private:
 	void Move(const FInputActionValue& InputActionValue);
@@ -57,6 +58,8 @@ private:
 	float AutoRunAcceptanceRadius = 50.f;
 	TObjectPtr<USplineComponent> Spline;
 	void AutoRun();
+
+
 };
 
 

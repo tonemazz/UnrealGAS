@@ -18,7 +18,6 @@
 AAuraPlayerController::AAuraPlayerController()
 {
 	bReplicates = true;
-
 	Spline = CreateDefaultSubobject<USplineComponent>(TEXT("Spline"));
 }
 
@@ -26,7 +25,6 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 	CursorTrace();
-
 	AutoRun();
 }
 
@@ -35,19 +33,16 @@ void AAuraPlayerController::BeginPlay()
 	Super::BeginPlay();
 	// Asserts that the AuraContext is valid, crash otherwise
 	check(AuraContext);
-
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
+
 	if (Subsystem)
 	{
 		Subsystem->AddMappingContext(AuraContext, 0);
 	}
-
-
+	
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;
-
 	FInputModeGameAndUI InputModeData;
-
 	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock); // Do not lock the mouse to the viewport
 	InputModeData.SetHideCursorDuringCapture(false); // Do not hide the cursor during capture
 	SetInputMode(InputModeData);
@@ -63,7 +58,6 @@ void AAuraPlayerController::SetupInputComponent()
 
 void AAuraPlayerController::CursorTrace()
 {
-	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
 
 	if (!CursorHit.bBlockingHit) return;
@@ -73,54 +67,12 @@ void AAuraPlayerController::CursorTrace()
 	LastActor = CurrentActor;
 	CurrentActor = CursorHit.GetActor();
 
-
-	/* 
-		Line trace from cursor. Several scenarios:
-		A. LastActor is null and CurrentActor is null
-			- Do nothing
-		B. LastActor is null and CurrentActor is valid (Getting valid actor for first time)
-			- Highlight CurrentActor
-		C. LastActor is valid and CurrentActor is null (No longer hovering over a valid actor)
-			- UnHighlight LastActor
-		D. Both actors are valid, but LastActor != CurrentActor (We are hovering over a different valid actor than the previous)
-			- UnHilight LastActor  and Highlight CurrentActor
-		E. Both actors are valid, and the same actor
-			- Do nothing
-	*/
-
-	if (LastActor == nullptr)
+	if (LastActor != CurrentActor)
 	{
-		if (CurrentActor != nullptr)
-		{
-			// Case B
-			CurrentActor->HighlightActor();
-		}
-		else
-		{
-			// Both null, do nothing (Case A)
-		}
+		if (LastActor) { LastActor->UnHighlightActor(); }
+		if (CurrentActor) { CurrentActor->HighlightActor(); }
 	}
-	else // LastActor is valid
-	{
-		if (CurrentActor == nullptr)
-		{
-			// Case C
-			LastActor->UnHighlightActor();
-		}
-		else // Both actors are valid 
-		{
-			if (LastActor != CurrentActor) // Case D
-			{
-				LastActor->UnHighlightActor();
-				CurrentActor->HighlightActor();
-			}
-			else
-			{
-				// Case E, do nothing
-			}
-		}
-	}
-} // end of CursorTrace()
+} 
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
@@ -209,9 +161,9 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		FollowTime += GetWorld()->GetDeltaSeconds();
 		FHitResult Hit;
 
-		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		if (CursorHit.bBlockingHit)
 		{
-			CachedDestination = Hit.ImpactPoint;
+			CachedDestination = CursorHit.ImpactPoint;
 		}
 
 		if (APawn* ControlledPawn = GetPawn())
