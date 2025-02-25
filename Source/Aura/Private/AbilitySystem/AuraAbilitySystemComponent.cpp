@@ -22,7 +22,7 @@
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
     // Bind the EffectApplied method to be called when a gameplay effect is applied to this component.
-    OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::EffectApplied);
+    OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::ClientEffectApplied);
     
     // Retrieve the singleton instance of gameplay tags.
     const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
@@ -102,7 +102,7 @@ void UAuraAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputT
  * @param EffectSpec The specification of the gameplay effect that was applied.
  * @param ActiveEffectHandle The handle to the active instance of the gameplay effect.
  */
-void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
+void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
     // Container to collect all asset tags associated with the applied gameplay effect.
     FGameplayTagContainer TagContainer;
