@@ -32,9 +32,22 @@ protected:
 	virtual void BeginPlay() override;
 
 	
-	UPROPERTY(EditAnywhere, Category = "Combat") TObjectPtr<class USkeletalMeshComponent> Weapon;
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TObjectPtr<class USkeletalMeshComponent> Weapon;
+
+	// This property MUST be set in the blueprint or we will possibly crash
+	// The socket name should be the same as the socket name in the weapon mesh, and the socket should exist.
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName WeaponTipSocketName;
+
+	virtual FVector GetCombatSocketLocation() override;
+	
+	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+	
+	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+	
 	virtual void SetupAbilityActorInfo();
 
 
